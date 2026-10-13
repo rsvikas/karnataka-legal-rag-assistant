@@ -4,63 +4,38 @@ An offline, hallucination-guarded Legal Research AI Assistant designed to run di
 
 ---
 
-## ⚠️ Important Note About Index Files
+## 🚀 Quickstart Guide (For New Users)
 
-This GitHub repository contains the **python scripts** and **configuration files**.
-
-The heavy vector search index files (`faiss.index`, `metadata.json`, `bm25.pkl`) are **not** stored on GitHub. Instead, they are stored and loaded directly from your **Google Drive** under the following folder path:
-
-`My Drive/Legal_RAG_Backup/indices/`
-
-When you run the script in Google Colab, it automatically copies these search indices from your Google Drive into the Colab environment.
-
----
-
-## 🚀 Quickstart Guide (Step-by-Step for Colab)
-
-### Step 1: Install Ollama & Pull AI Models
-Open a new notebook in Google Colab, paste this into a code cell, and run it:
+### Step 1: Install Ollama & Download Models
+Run this in a Google Colab code cell:
 
 ```python
-# Install required system tools and Ollama
+# Install dependencies & Ollama
 !apt-get update -qq && apt-get install -y zstd
 !curl -fsSL [https://ollama.com/install.sh](https://ollama.com/install.sh) | sh
+!pip install faiss-cpu rank_bm25 numpy requests
 
-# Start Ollama server in background
+# Start Ollama background service
 import subprocess, time
 subprocess.Popen(["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 time.sleep(5)
 
-# Download embedding and language models
+# Pull required AI models
 !ollama pull nomic-embed-text
 !ollama pull qwen2.5:7b
 ```
 
 ---
 
-### Step 2: Install Python Libraries & Mount Google Drive
-In a second code cell, run:
+### Step 2: Clone Repository & Run Application
+Run this in a second code cell:
 
 ```python
-# Install search dependencies
-!pip install faiss-cpu rank_bm25 numpy requests
-
-# Mount Google Drive (Make sure your 'Legal_RAG_Backup/indices' folder is present in Drive)
-from google.colab import drive
-drive.mount('/content/drive')
-```
-
----
-
-### Step 3: Clone Repository & Run the App
-In a third code cell, run:
-
-```python
-# Clone this repository into Colab
+# Clone repository and navigate to folder
 !git clone [https://github.com/rsvikas/karnataka-legal-rag-assistant.git](https://github.com/rsvikas/karnataka-legal-rag-assistant.git)
 %cd karnataka-legal-rag-assistant
 
-# Start interactive query session
+# Launch legal assistant (Index files download automatically)
 !python scripts/legal_rag_app.py
 ```
 
@@ -68,10 +43,10 @@ In a third code cell, run:
 
 ## 📂 Repository Structure
 
-- `scripts/legal_rag_app.py`: Main interactive RAG search application.
-- `requirements.txt`: Python package dependencies.
-- `README.md`: Complete setup instructions.
-- `.gitignore`: Excludes local temporary files and large index binaries.
+- `scripts/legal_rag_app.py`: Interactive RAG script with automatic release index downloader.
+- `requirements.txt`: Required Python dependencies.
+- `README.md`: Setup instructions.
+- `.gitignore`: Excludes binary files and index directories.
 
 ---
 
