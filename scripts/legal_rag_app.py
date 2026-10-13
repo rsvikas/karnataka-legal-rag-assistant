@@ -1,7 +1,16 @@
-import os
+import sys
 import subprocess
+
+# Auto-install missing dependencies if faiss is not present
+try:
+    import faiss
+except ImportError:
+    print("📦 Missing dependencies detected. Installing required packages...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "faiss-cpu", "rank_bm25", "numpy", "requests", "-q"])
+    import faiss
+
+import os
 import time
-import faiss
 import json
 import pickle
 import numpy as np
